@@ -1,35 +1,58 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Model Gallery with AR & VR</title>
-    <!-- تضمين مكتبة A-Frame الخاصة بـ AR.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/loaders/GLTFLoader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/vr/VRButton.js"></script> <!-- تضمين VRButton -->
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Model Viewer - AR & VR</title>
+  <script src="https://cdn.jsdelivr.net/npm/aframe"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
-    <!-- عرض QR code في الأعلى -->
-    <div id="qrcode" style="position: absolute; top: 10px; left: 10px;"></div>
-    
-    <!-- مشهد AR -->
-    <a-scene embedded arjs>
-        <!-- الموديلات 3D في AR سيتم تحميلها هنا -->
-        <a-marker preset="hiro">
-            <a-entity id="model" gltf-model="url(https://drive.google.com/uc?id=15S1Qy2YHQS6XZQ0U0ik5xM64owfq88C-)"></a-entity>
-        </a-marker>
-        <a-camera></a-camera>
-    </a-scene>
+  
+  <!-- A-Frame scene for AR/VR -->
+  <a-scene embedded arjs>
+    <!-- 3D Model 1 in AR -->
+    <a-entity 
+      gps-entity-place="latitude: 37.7749; longitude: -122.4194;" 
+      gltf-model="url(https://drive.google.com/uc?id=15S1Qy2YHQS6XZQ0U0ik5xM64owfq88C-)" 
+      scale="2 2 2"
+      animation="property: rotation; to: 0 360 0; dur: 5000; loop: true">
+    </a-entity>
 
-    <!-- مشهد VR داخل عنصر 3D -->
-    <div id="3d-container"></div>
+    <!-- AR Marker for 3D model -->
+    <a-marker preset="hiro">
+      <a-entity 
+        gltf-model="url(https://drive.google.com/uc?id=18-Wa4TYsw6cmmUfBDwc-G4mt4aeq3Lpm)" 
+        scale="2 2 2"
+        position="0 0 0" 
+        rotation="0 180 0">
+      </a-entity>
+    </a-marker>
     
-    <!-- تضمين الكود البرمجي الخاص بتفعيل AR و VR -->
-    <script src="js/app.js"></script>
+    <!-- Camera and VR support -->
+    <a-camera>
+      <!-- Add a button to toggle VR mode -->
+      <a-cursor></a-cursor>
+    </a-camera>
+
+  </a-scene>
+
+  <!-- QR code for scanning to open AR -->
+  <div id="qr-container" style="position: fixed; top: 10px; left: 10px;">
+    <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https://your-website-link.com" alt="QR Code">
+  </div>
+
+  <!-- VR Mode Button -->
+  <div id="vr-btn" style="position: fixed; bottom: 10px; right: 10px;">
+    <button onclick="enterVR()">Enter VR</button>
+  </div>
+
+  <script>
+    function enterVR() {
+      document.querySelector('a-scene').enterVR();
+    }
+  </script>
+
 </body>
 </html>
